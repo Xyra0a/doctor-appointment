@@ -8,7 +8,7 @@ class DoctorRepository
 {
     public function getAllDoctors(array $fields)
     {
-        return Doctor::select($fields)->with('specialist', 'hospital')->paginate(10);
+        return Doctor::select($fields)->with('specialist', 'hospital')->latest()->paginate(10);
     }
 
     public function getDoctorById(int $id, array $fields)
@@ -35,18 +35,11 @@ class DoctorRepository
         return $doctor;
     }
 
-    public function filterBySpecialistAndHospital($specialistId, $hospitalId, array $fields)
+    public function filterBySpecialistAndHospital(int $specialistId, int $hospitalId)
     {
-        $query = Doctor::select($fields)->with('specialist', 'hospital');
-
-        if ($specialistId) {
-            $query->where('specialist_id', $specialistId);
-        }
-
-        if ($hospitalId) {
-            $query->where('hospital_id', $hospitalId);
-        }
-
-        return $query->get();
+        return Doctor::with(['specialist', 'hospital'])
+            ->where('specialist_id', $specialistId)
+            ->where('hospital_id', $hospitalId)
+            ->get();
     }
 }

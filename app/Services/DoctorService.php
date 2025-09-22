@@ -30,7 +30,7 @@ class DoctorService
     public function createDoctor(array $data)
     {
         if(!$this->hospitalSpecialistRepository->existsForHospitalAndSpecialist($data['hospital_id'], $data['specialist_id'])) {
-            throw ValidationException::withMessages(['specialist_id' => 'This hospital doesnt have this specialist']);
+            throw ValidationException::withMessages(['specialist_id' => 'This hospital dont have this specialist']);
         }
 
         if(isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
@@ -78,4 +78,9 @@ class DoctorService
             Storage::disk('public')->delete($relativePath);
         }
     }
+
+    public function filterBySpecialistAndHospital(int $specialistId, int $hospitalId)
+    {
+        return $this->doctorRepository->filterBySpecialistAndHospital($specialistId, $hospitalId);
     }
+}

@@ -17,4 +17,11 @@ class HospitalSpecialistRepository
             ->where('hospital_id', $hospitalId)
             ->get();
     }
+
+    public function existsForHospitalAndSpecialist(int $hospitalId, int $specialistId): bool
+    {
+        return HospitalSpecialist::where('hospital_id', $hospitalId)
+            ->where('specialist_id', $specialistId)
+            ->exists();
+    }
 }
