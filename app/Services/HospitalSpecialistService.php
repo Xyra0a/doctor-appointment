@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use App\Repositories\HospitalRepository;
+
 class HospitalSpecialistService
 {
       // Specialist Management
     private $hospitalRepository;
 
-    public function __construct($hospitalRepository)
+    public function __construct(HospitalRepository $hospitalRepository)
     {
         $this->hospitalRepository = $hospitalRepository;
     }

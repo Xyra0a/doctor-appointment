@@ -5,12 +5,13 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\SpecialistRepository;
 
 class SpecialistService
 {
     private $specialistRepository;
 
-    public function __construct($specialistRepository)
+    public function __construct(SpecialistRepository $specialistRepository)
     {
         $this->specialistRepository = $specialistRepository;
     }

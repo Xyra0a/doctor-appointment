@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\Repositories\HospitalRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class HospitalService
 {
     private $hospitalRepository;
-    public function __construct($hospitalRepository)
+    public function __construct(HospitalRepository $hospitalRepository)
     {
         $this->hospitalRepository = $hospitalRepository;
     }

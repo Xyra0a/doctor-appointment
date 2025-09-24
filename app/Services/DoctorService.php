@@ -3,15 +3,17 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use App\Repositories\DoctorRepository;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use App\Repositories\HospitalSpecialistRepository;
 
 class DoctorService
 {
     private $doctorRepository; //dependency injection
     private $hospitalSpecialistRepository;
 
-    public function __construct($doctorRepository, $hospitalSpecialistRepository)
+    public function __construct(DoctorRepository $doctorRepository, HospitalSpecialistRepository $hospitalSpecialistRepository)
     {
         $this->doctorRepository = $doctorRepository;
         $this->hospitalSpecialistRepository = $hospitalSpecialistRepository;
@@ -82,5 +84,42 @@ class DoctorService
     public function filterBySpecialistAndHospital(int $specialistId, int $hospitalId)
     {
         return $this->doctorRepository->filterBySpecialistAndHospital($specialistId, $hospitalId);
+    }
+
+    public function getAvailableTimes(int $doctorId) //hanya mengambil id dokter
+    {
+        $doctor = $this->doctorRepository->getDoctorById($doctorId, ['id']);
+
+        $dates = collect([
+            now()->addDay(1)->startOfDay('Y-m-d'),
+            now()->addDays(2)->startOfDay('Y-m-d'),
+            now()->addDays(3)->startOfDay('Y-m-d'),
+        ]);
+
+        $timeSlots = collect([
+            '09:00', '10:00', '11:00', '13:00', '14:00', '15:00'
+        ]);
+
+        $availability = [];
+
+        foreach($dates as $date)
+        {
+            $dateStr = $date->toDateString();
+            $availability[$dateStr] = [];
+
+            foreach($timeSlots as $time)
+            {
+                $isTaken = $doctor->bookingTransaction()
+                    ->whereDate('started_at', $dateStr)
+                    ->where('time_at', $time)
+                    ->exists();
+
+                if(!$isTaken) {
+                    $availability[$dateStr][] = $time;
+                }
+            }
+        }
+
+        return $availability;
     }
 }
