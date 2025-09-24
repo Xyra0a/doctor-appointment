@@ -14,9 +14,9 @@ class HospitalService
         $this->hospitalRepository = $hospitalRepository;
     }
 
-    public function getAllHospitals(array $fields)
+    public function getAllHospital(array $fields)
     {
-        return $this->hospitalRepository->getAllHospitals($fields);
+        return $this->hospitalRepository->getAllHospital($fields);
     }
 
     public function getHospitalById(int $id, array $fields)

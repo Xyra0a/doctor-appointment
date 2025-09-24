@@ -6,7 +6,7 @@ use App\Models\Hospital;
 
 class HospitalRepository
 {
-    public function getAllHospitals(array $fields)
+    public function getAllHospital(array $fields)
     {
         return Hospital::select($fields)->latest()->paginate(10);
     }
