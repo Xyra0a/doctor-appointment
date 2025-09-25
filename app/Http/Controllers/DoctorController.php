@@ -29,8 +29,8 @@ class DoctorController extends Controller
 
     public function show(int $id)
     {
-        $fields = ['*'];
         try {
+            $fields = ['*'];
             $doctor = $this->doctorService->getDoctorById($id, $fields);
             return response()->json(new DoctorResource($doctor));
         } catch (ModelNotFoundException $e) {
@@ -74,7 +74,7 @@ class DoctorController extends Controller
             $validated['specialist_id'],
             $validated['hospital_id'],
         );
-        return response()->json(DoctorResource::collection($doctors));
+        return DoctorResource::collection($doctors);
     }
 
     public function getAvailableTimes(int $doctorId)

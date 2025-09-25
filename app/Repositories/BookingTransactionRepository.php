@@ -9,7 +9,7 @@ class BookingTransactionRepository
     //manager query
     public function getAll()
     {
-        return BookingTransaction::with(['doctor', 'user','doctor.specialist', 'doctor.hospital'])->latest()->paginate(10);
+        return BookingTransaction::with(['doctor','doctor.specialist', 'doctor.hospital', 'user'])->latest()->paginate(10);
     }
 
     public function getIdForManager(int $id)

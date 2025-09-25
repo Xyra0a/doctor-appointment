@@ -18,16 +18,16 @@ class BookingTransactionController extends Controller
         $this->bookingTransactionService = $bookingTransactionService;
     }
 
-    public function index(array $fields)
+    public function index()
     {
-        $transactions = $this->bookingTransactionService->getAll($fields);
+        $transactions = $this->bookingTransactionService->getAll(['*']);
         return response()->json(TransactionResource::collection($transactions), 200);
     }
 
-    public function show(int $id, array $fields)
+    public function show(int $id)
     {
         try {
-            $transaction = $this->bookingTransactionService->getIdForManager($id, $fields);
+            $transaction = $this->bookingTransactionService->getIdForManager($id, ['*']);
             return response()->json(new TransactionResource($transaction), 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Transaction not found'], 404);
@@ -39,7 +39,7 @@ class BookingTransactionController extends Controller
         $request->validate([
             'status' => ['required', 'string', 'in:Approved,Rejected'],
         ]);
-        
+
         try {
             $transaction = $this->bookingTransactionService->updateStatus($transactionId, $request->only('status'));
             return response()->json(

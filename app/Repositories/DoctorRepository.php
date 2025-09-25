@@ -13,7 +13,8 @@ class DoctorRepository
 
     public function getDoctorById(int $id, array $fields)
     {
-        return Doctor::select($fields)->with('specialist', 'hospital', 'bookingTransaction.user')->findOrFail($id);
+        return Doctor::select($fields)->with('specialist', 'hospital', )->findOrFail($id);
+        // 'bookings.user'
     }
 
     public function createDoctor(array $data)
@@ -25,7 +26,9 @@ class DoctorRepository
     {
         $doctor = Doctor::findOrFail($id);
         $doctor->update($data);
-        return $doctor;
+
+        return Doctor::with('specialist', 'hospital') // atau 'bookings.user' kalau perlu
+                ->findOrFail($id);
     }
 
     public function deleteDoctor(int $id)

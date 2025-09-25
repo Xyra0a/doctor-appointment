@@ -21,7 +21,7 @@ class HospitalRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('hospital') ? $this->route('hospital')->id : null;
+        $id = $this->route('hospitals') ? $this->route('hospitals')->id : null;
         return [
             //
             'name' => ['required', 'string', 'max:255', 'unique:hospitals,name,'.$id],

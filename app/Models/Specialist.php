@@ -28,6 +28,7 @@ class Specialist extends Model
         return $this->hasMany(Doctor::class);
     }
 
+
     public function getPhotoAttribute($value)
     {
         if (!$value) {

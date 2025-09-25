@@ -21,13 +21,13 @@ class DoctorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('doctor') ? $this->route('doctor')->id : null;
+        $id = $this->route('doctors') ? $this->route('doctors')->id : null;
         return [
             //
             'name' => ['required', 'string', 'max:255', 'unique:doctors,name,'. $id],
             'photo' => $this->isMethod('post') ? ['required', 'image', 'max:2048'] : ['sometimes', 'image', 'max:2048'],
             'about' => ['required', 'string'],
-            'yoe' => ['required', 'integer', 'min:0', 'max:100'],
+            'yoe' => ['required', 'string', 'min:0', 'max:100'],
             'specialist_id' => ['required', 'exists:specialists,id'],
             'hospital_id' => ['required', 'exists:hospitals,id'],
             'gender' => ['required', 'in:Male,Female']

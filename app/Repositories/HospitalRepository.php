@@ -13,7 +13,7 @@ class HospitalRepository
 
     public function getHospitalById(int $id, array $fields)
     {
-        return Hospital::select($fields)->with(['doctors.specialist', 'specialist'])->findOrFail($id);
+        return Hospital::select($fields)->with(['doctors.specialists', 'specialists'])->findOrFail($id);
     }
 
     public function createHospital(array $data)
@@ -33,4 +33,6 @@ class HospitalRepository
         $hospital = Hospital::findOrFail($id);
         return $hospital->delete();
     }
+
+    
 }

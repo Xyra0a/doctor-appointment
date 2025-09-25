@@ -8,13 +8,13 @@ class SpecialistRepository
 {
     public function getAllSpecialists(array $fields)
     {
-        return Specialist::select($fields)->with(['hospital', 'doctors'])->get();
+        return Specialist::select($fields)->with(['hospitals', 'doctors'])->get();
     }
 
     public function getSpecialistById(int $id, array $fields)
     {
         return Specialist::select($fields)
-            ->with(['hospital' => function ($query) use ($id){
+            ->with(['hospitals' => function ($query) use ($id){
                 $query->withCount(['doctors' => function ($query) use ($id){
                     $query->where('specialist_id', $id);
                 }]);
@@ -44,6 +44,14 @@ class SpecialistRepository
         $specialist->delete();
         return $specialist;
     }
+
+    public function getSpecialistsWithDoctorCount(int $hospitalId)
+    {
+        return Specialist::withCount(['doctors' => function ($q) use ($hospitalId) {
+            $q->where('hospital_id', $hospitalId);
+        }])->get();
+    }
+
 
 
 }

@@ -32,7 +32,7 @@ class DoctorService
     public function createDoctor(array $data)
     {
         if(!$this->hospitalSpecialistRepository->existsForHospitalAndSpecialist($data['hospital_id'], $data['specialist_id'])) {
-            throw ValidationException::withMessages(['specialist_id' => 'This hospital dont have this specialist']);
+            throw ValidationException::withMessages(['specialist_id' => 'This specialist does not belong to the hospital', 'hospital_id' => 'This hospital does not have this specialist']);
         }
 
         if(isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
@@ -109,7 +109,7 @@ class DoctorService
 
             foreach($timeSlots as $time)
             {
-                $isTaken = $doctor->bookingTransaction()
+                $isTaken = $doctor->bookings()
                     ->whereDate('started_at', $dateStr)
                     ->where('time_at', $time)
                     ->exists();

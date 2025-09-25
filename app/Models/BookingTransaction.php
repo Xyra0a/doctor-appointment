@@ -11,6 +11,8 @@ class BookingTransaction extends Model
     //
     use SoftDeletes;
 
+    protected $table = 'booking_trasanctions';
+
     protected $fillable = [
         'user_id',
         'doctor_id',

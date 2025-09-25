@@ -1,9 +1,10 @@
-    <?php
+<?php
+
+    namespace App\Http\Controllers;
 
     use App\Services\HospitalService;
     use App\Services\HospitalSpecialistService;
     use Illuminate\Http\Request;
-    use App\Http\Controllers\Controller;
 
     class HospitalSpecialistController extends Controller
     {

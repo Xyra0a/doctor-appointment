@@ -69,4 +69,6 @@ class HospitalService
             Storage::disk('public')->delete($relativePath);
         }
     }
+
+    
 }
