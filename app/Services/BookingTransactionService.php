@@ -37,14 +37,14 @@ class BookingTransactionService
     }
 
     // user services
-    public function getAllForUser(int $userId, array $fields)
+    public function getAllForUser(int $userId)
     {
-        return $this->bookingTransactionRepository->getAllForUser($userId, $fields);
+        return $this->bookingTransactionRepository->getAllForUser($userId);
     }
 
-    public function getById(int $id, int $userId, array $fields)
+    public function getById(int $id, int $userId)
     {
-        return $this->bookingTransactionRepository->getById($id, $userId, $fields);
+        return $this->bookingTransactionRepository->getById($id, $userId);
     }
 
     public function create(array $data)
