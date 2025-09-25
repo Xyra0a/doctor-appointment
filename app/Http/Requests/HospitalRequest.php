@@ -24,7 +24,13 @@ class HospitalRequest extends FormRequest
         $id = $this->route('hospital') ? $this->route('hospital')->id : null;
         return [
             //
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', 'unique:hospitals,name,'.$id],
+            'photo' => $this->isMethod('post') ? ['required', 'image', 'max:2048'] : ['sometimes', 'image', 'max:2048'],
+            'about' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'post_code' => ['required', 'string', 'max:10'],
+            'phone' => ['required', 'string', 'max:15'],
         ];
     }
 }

@@ -24,7 +24,7 @@ Route::delete('/hospitals/{hospital}/specialists/{specialist}', [HospitalControl
 Route::apiResource('transactions', BookingTransactionController::class);
 Route::patch('/transactions/{transaction}/status', [BookingTransactionController::class, 'updateStatus']);
 
-Route::get('doctors-filter', [DoctorController::class, 'filterBySpecialist']);
+Route::get('doctors-filter', [DoctorController::class, 'filterBySpecialistAndHospital']);
 Route::get('doctors/{doctorId}/available-times', [DoctorController::class, 'getAvailableTimes']);
 
 Route::get('my-orders', [MyOrderController::class, 'index']);
